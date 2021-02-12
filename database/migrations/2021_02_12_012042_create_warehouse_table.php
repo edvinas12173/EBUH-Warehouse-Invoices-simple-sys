@@ -20,6 +20,7 @@ class CreateWarehouseTable extends Migration
             $table->integer('category');
             $table->integer('stock');
             $table->integer('price');
+            $table->string('location');
             $table->timestamps();
         });
     }
