@@ -71,7 +71,7 @@
                                 <td>{{ $item->price }}€</td>
                                 <td>{{ $item->location }}</td>
                                 <td>
-                                    <a href=""><button class="btn btn-dark btn-rounded">More</button></a>
+                                    <a href="/warehouse/items/{{ $item->id }}"><button class="btn btn-dark btn-rounded">More</button></a>
                                 </td>
                             </tr>
                             @endforeach

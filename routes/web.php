@@ -51,6 +51,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/', [WarehouseController::class, 'index']);
         Route::get('/items/additem', [WarehouseController::class, 'additem'])->name('additem');
         Route::post('/items/additem', [WarehouseController::class, 'store']);
+        Route::get('/items/{id}', [WarehouseController::class, 'showitem']);
+        Route::get('/items/{id}/edit', [WarehouseController::class, 'edititem'])->name('edititem');
+        Route::put('/items/{id}/edit', [WarehouseController::class, 'itemupdate']);
+        Route::delete('/items/{id}', [WarehouseController::class, 'destroyitem'])->name('destroyitem');
     });
 });
 

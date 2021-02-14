@@ -15,7 +15,7 @@ class WarehouseController extends Controller
     }
 
     public function additem() {
-        return view('warehouse.additem');
+        return view('warehouse.add-item');
     }
 
     public function store(Request $request) {
@@ -34,5 +34,59 @@ class WarehouseController extends Controller
         $item->save();
 
         return redirect('/warehouse');
+    }
+
+    public function showitem($id) {
+        $item = Warehouse::find($id);
+        if (!Warehouse::where('id', $id)->exists()) {
+            return redirect('/');
+        }
+        else {
+            return view('warehouse.item-show', compact('item'));
+        }
+    }
+
+    public function edititem($id) {
+        $item = Warehouse::find($id);
+        if(Auth::user()->role == "Admin" or Auth::user()->role == "Storekeeper") {
+            return view('warehouse.edit-item')->with('item', $item);
+        }
+        else {
+            return redirect('/');
+        }
+    }
+
+    public function itemupdate(Request $request, $id) {
+        $this->validate($request, [
+            'item_name' => 'required',
+            'item_desc' => 'required'
+        ]);
+
+        if(Auth::user()->role == "Admin" or Auth::user()->role == "Storekeeper") {
+            $item = Warehouse::find($id);
+            $item->item_name = $request->input('item_name');
+            $item->item_desc = $request->input('item_desc');
+            $item->category = $request->input('category');
+            $item->stock = $request->input('stock');
+            $item->price = $request->input('price');
+            $item->location = $request->input('location');
+            $item->save();
+
+            return redirect('/warehouse/items/' . $item->id);
+        }
+        else {
+            return redirect('/');
+        }
+    }
+
+    public function destroyitem($id) {
+        if(Auth::user()->role == "Admin") {
+            $item = Warehouse::find($id);
+            $item->delete();
+            return redirect('/warehouse');
+        }
+        else {
+            return redirect('/');
+        }
     }
 }

@@ -14,8 +14,9 @@
                         <select id="role" name="role" type="text" class="form-control" placeholder="Role">
                             <option selected value="{{ $employee->role }}">{{ $employee->role }}</option>
                             <option value="Admin">Admin</option>
-                            <option value="Manager">Manager</option>
                             <option value="Accountant">Accountant</option>
+                            <option value="Manager">Manager</option>
+                            <option value="Storekeeper">Storekeeper</option>
                         </select>
                     </div>
                     <div class="form-group text-center m-t-20">
