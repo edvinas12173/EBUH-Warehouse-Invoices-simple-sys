@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Models\User;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CompaniesController;
@@ -50,6 +49,8 @@ Route::group(['middleware' => 'auth'], function () {
     // Warehouse
     Route::group(['prefix' => 'warehouse'],function () {
         Route::get('/', [WarehouseController::class, 'index']);
+        Route::get('/items/additem', [WarehouseController::class, 'additem'])->name('additem');
+        Route::post('/items/additem', [WarehouseController::class, 'store']);
     });
 });
 

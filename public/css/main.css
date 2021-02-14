@@ -2865,3 +2865,10 @@ button:focus {
 .form-display {
     display: inline;
 }
+
+.warehouse-item-desc-overflow {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 800px;
+}

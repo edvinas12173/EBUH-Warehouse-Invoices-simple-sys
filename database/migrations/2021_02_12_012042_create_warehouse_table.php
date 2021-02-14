@@ -16,7 +16,7 @@ class CreateWarehouseTable extends Migration
         Schema::create('warehouse', function (Blueprint $table) {
             $table->id();
             $table->string('item_name');
-            $table->string('item_desc');
+            $table->longText('item_desc');
             $table->integer('category');
             $table->integer('stock');
             $table->integer('price');

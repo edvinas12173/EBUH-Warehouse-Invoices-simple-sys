@@ -251,24 +251,32 @@
                     <div class="card-header">
                         <h4 class="card-title">New companies</h4>
                     </div>
-                    <ul class="list-media">
-                        <?php $count = 0; ?>
-                        @foreach($companies as $company)
-                            <?php if($count == 4) break; ?>
-                            <li class="list-item">
-                                <div class="client-item">
-                                    <div class="media-img">
-                                        <span class="title text-semibold">{{ $company->name }}</span>
-                                    </div>
-                                    <div class="info">
-                                        <div class="float-item">
-                                            <a href="/companys/profile/{{ $company->id }}"><button class="btn btn-common btn-rounded">More informations</button></a>
+                    @if($companies->count() == 0)
+                        <div class="container">
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <strong>Warning!</strong> The list of companies is empty.
+                            </div>
+                        </div>
+                    @else
+                        <ul class="list-media">
+                            <?php $count = 0; ?>
+                            @foreach($companies as $company)
+                                <?php if($count == 4) break; ?>
+                                <li class="list-item">
+                                    <div class="client-item">
+                                        <div class="media-img">
+                                            <span class="title text-semibold">{{ $company->name }}</span>
+                                        </div>
+                                        <div class="info">
+                                            <div class="float-item">
+                                                <a href="/companys/profile/{{ $company->id }}"><button class="btn btn-common btn-rounded">More informations</button></a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </li><?php $count++; ?>
-                        @endforeach
-                    </ul>
+                                </li><?php $count++; ?>
+                            @endforeach
+                        </ul>
+                    @endif
                 </div>
             </div>
         </div>
