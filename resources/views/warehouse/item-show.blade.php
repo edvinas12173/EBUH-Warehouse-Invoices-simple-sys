@@ -28,7 +28,7 @@
                             <td>Category: <b>{{ $item -> category }}</b></td>
                             <td>Stock: <b>{{ $item -> stock }}</b></td>
                             <td>Price: <b>{{ $item -> price }}</b></td>
-                            <td>Price: <b>{{ $item -> location }}</b></td>
+                            <td>Location: <b>{{ $item -> location }}</b></td>
                         </tr>
                         <tr>
                             <td>Description:</td>

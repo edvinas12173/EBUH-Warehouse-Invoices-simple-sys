@@ -56,6 +56,19 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('/items/{id}/edit', [WarehouseController::class, 'itemupdate']);
         Route::delete('/items/{id}', [WarehouseController::class, 'destroyitem'])->name('destroyitem');
     });
+    // Warehouse - Category
+    Route::group(['prefix' => 'warehouse/category'],function () {
+        Route::get('/', [WarehouseController::class, 'categoryindex']);
+        Route::get('/addcategory', [WarehouseController::class, 'addcategory'])->name('addcategory');
+        Route::post('/addcategory', [WarehouseController::class, 'storecategory']);
+        Route::get('/{id}/edit', [WarehouseController::class, 'editcategory'])->name('editcategory');
+        Route::put('/{id}/edit', [WarehouseController::class, 'categoryupdate']);
+        Route::delete('/{id}', [WarehouseController::class, 'destroycategory'])->name('destroycategory');
+    });
+    // Warehouse - Location
+    Route::group(['prefix' => 'warehouse/location'],function () {
+        Route::get('/', [WarehouseController::class, 'locationindex']);
+    });
 });
 
 

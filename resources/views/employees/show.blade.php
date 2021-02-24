@@ -57,6 +57,8 @@
                         <td class="text-primary">{{ $employee->role }}</td>
                     @elseif ($employee->role == "Accountant")
                         <td class="text-success">{{ $employee->role }}</td>
+                    @elseif ($employee->role == "Manager")
+                        <td class="text-warning">{{ $employee->role }}</td>
                     @else
                         <td class="text-dark">{{ $employee->role }}</td>
                     @endif

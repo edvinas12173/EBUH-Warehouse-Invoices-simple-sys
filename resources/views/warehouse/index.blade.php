@@ -22,12 +22,12 @@
                         <ul>
                             <li>
                                 <a href="/warehouse/location">
-                                    <button class="btn btn-common btn-rounded" data-toggle="tooltip" data-placement="bottom" data-original-title="New location"><i class="fas fa-map-marker-alt"></i></button>
+                                    <button class="btn btn-common btn-rounded" data-toggle="tooltip" data-placement="bottom" data-original-title="Location"><i class="fas fa-map-marker-alt"></i></button>
                                 </a>
                             </li>
                             <li>
                                 <a href="/warehouse/category">
-                                    <button class="btn btn-common btn-rounded" data-toggle="tooltip" data-placement="bottom" data-original-title="New category"><i class="fas fa-list"></i></button>
+                                    <button class="btn btn-common btn-rounded" data-toggle="tooltip" data-placement="bottom" data-original-title="Category"><i class="fas fa-list"></i></button>
                                 </a>
                             </li>
                             <li>
@@ -54,9 +54,7 @@
                                 <th>Item name</th>
                                 <th>Description</th>
                                 <th>Category</th>
-                                <th>Stock</th>
                                 <th>Price</th>
-                                <th>Location</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -67,9 +65,7 @@
                                 <td>{{ $item->item_name }}</td>
                                 <td class="warehouse-item-desc-overflow">{{ $item->item_desc }}</td>
                                 <td>{{ $item->category }}</td>
-                                <td>{{ $item->stock }}</td>
                                 <td>{{ $item->price }}€</td>
-                                <td>{{ $item->location }}</td>
                                 <td>
                                     <a href="/warehouse/items/{{ $item->id }}"><button class="btn btn-dark btn-rounded">More</button></a>
                                 </td>

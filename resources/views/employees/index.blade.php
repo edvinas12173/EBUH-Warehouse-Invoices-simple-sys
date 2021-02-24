@@ -31,7 +31,6 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Phone</th>
-                                <th>Birthday</th>
                                 <th>Role</th>
                                 <th></th>
                             </tr>
@@ -53,12 +52,13 @@
                                     </td>
                                     <td>{{ $employee->email }}</td>
                                     <td>{{ $employee->phone }}</td>
-                                    <td>{{ $employee->birthday }} , {{ \Carbon\Carbon::parse($employee->birthday)->age }} year</td>
                                     <td>
                                         @if ($employee->role == "Admin")
                                             <span class="badge badge-primary">{{ $employee->role }}</span>
                                         @elseif ($employee->role == "Accountant")
                                             <span class="badge badge-success">{{ $employee->role }}</span>
+                                        @elseif ($employee->role == "Manager")
+                                            <span class="badge badge-warning">{{ $employee->role }}</span>
                                         @else
                                             <span class="badge badge-dark">{{ $employee->role }}</span>
                                         @endif
