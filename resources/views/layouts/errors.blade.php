@@ -19,35 +19,22 @@
     <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
-
-    <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
 </head>
 
 <body>
-    <div class="app header-default side-nav-dark">
-        <div class="layout">
-            @include('includes.nav')
-            <!-- Page Container START -->
-            <div class="page-container">
-                <!-- Content Wrapper START -->
-                <div class="main-content">
-                    <div class="container-fluid">
-                        @yield('content')
-                    </div>
-                </div>
-                <!-- Content Wrapper END -->
-                @include('includes.footer')
-            </div>
-            <!-- Page Container END -->
-        </div>
-    </div>
 
-    <!-- Preloader -->
-    <div id="preloader">
-        <div class="loader" id="loader-1"></div>
+<div class="container">
+    <div class="row">
+        @yield('content')
     </div>
-    <!-- End Preloader -->
+</div>
 
-    @include('includes.script')
+<!-- Preloader -->
+<div id="preloader">
+    <div class="loader" id="loader-1"></div>
+</div>
+<!-- End Preloader -->
+
+@include('includes.script')
 </body>
 </html>

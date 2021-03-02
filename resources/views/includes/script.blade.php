@@ -1,3 +1,6 @@
+<script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+{!! Toastr::message() !!}
+
 <!-- Datepicker -->
 <script src="{{ asset('js/datepicker.js') }}"></script>
 

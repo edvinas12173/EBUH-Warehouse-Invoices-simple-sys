@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Warehouse;
 use App\Models\Category;
 use App\Models\Location;
+use Brian2694\Toastr\Facades\Toastr;
 
 
 class WarehouseController extends Controller
@@ -26,41 +27,90 @@ class WarehouseController extends Controller
     }
 
     public function additem() {
-        return view('warehouse.add-item');
+        if(Auth::user()->role == "Admin" or Auth::user()->role == "Storekeeper") {
+            return view('warehouse.add-item');
+        }
+        else {
+            return redirect('/');
+        }
     }
 
     public function addcategory() {
-        return view('warehouse.add-category');
+        if(Auth::user()->role == "Admin" or Auth::user()->role == "Storekeeper") {
+            return view('warehouse.add-category');
+        }
+        else {
+            return redirect('/');
+        }
+    }
+
+    public function addlocation() {
+        if(Auth::user()->role == "Admin" or Auth::user()->role == "Storekeeper") {
+            return view('warehouse.add-location');
+        }
+        else {
+            return redirect('/');
+        }
     }
 
     public function store(Request $request) {
-        $this->validate($request, [
-            'item_name' => 'required',
-            'item_desc' => 'required'
-        ]);
+        if(Auth::user()->role == "Admin" or Auth::user()->role == "Storekeeper") {
+            $this->validate($request, [
+                'item_name' => 'required',
+                'item_desc' => 'required'
+            ]);
 
-        $item = new Warehouse;
-        $item->item_name = $request->input('item_name');
-        $item->item_desc = $request->input('item_desc');
-        $item->category = $request->input('category');
-        $item->stock = $request->input('stock');
-        $item->price = $request->input('price');
-        $item->location = $request->input('location');
-        $item->save();
+            $item = new Warehouse;
+            $item->item_name = $request->input('item_name');
+            $item->item_desc = $request->input('item_desc');
+            $item->category = $request->input('category');
+            $item->stock = $request->input('stock');
+            $item->price = $request->input('price');
+            $item->location = $request->input('location');
+            $item->save();
 
-        return redirect('/warehouse');
+            Toastr::success('New item added!');
+            return redirect('/warehouse');
+        }
+        else {
+            return redirect('/');
+        }
     }
 
     public function storecategory(Request $request) {
-        $this->validate($request, [
-            'name' => 'required',
-        ]);
+        if(Auth::user()->role == "Admin" or Auth::user()->role == "Storekeeper") {
+            $this->validate($request, [
+                'name' => 'required',
+            ]);
 
-        $category = new Category();
-        $category->name = $request->input('name');
-        $category->save();
+            $category = new Category();
+            $category->name = $request->input('name');
+            $category->save();
 
-        return redirect('/warehouse/category');
+            Toastr::success('New category added!');
+            return redirect('/warehouse/category');
+        }
+        else {
+            return redirect('/');
+        }
+    }
+
+    public function storelocation(Request $request) {
+        if(Auth::user()->role == "Admin" or Auth::user()->role == "Storekeeper") {
+            $this->validate($request, [
+                'name' => 'required',
+            ]);
+
+            $location = new Location();
+            $location->name = $request->input('name');
+            $location->save();
+
+            Toastr::success('New location added!');
+            return redirect('/warehouse/location');
+        }
+        else {
+            return redirect('/');
+        }
     }
 
     public function showitem($id) {
@@ -74,8 +124,8 @@ class WarehouseController extends Controller
     }
 
     public function edititem($id) {
-        $item = Warehouse::find($id);
         if(Auth::user()->role == "Admin" or Auth::user()->role == "Storekeeper") {
+            $item = Warehouse::find($id);
             return view('warehouse.edit-item')->with('item', $item);
         }
         else {
@@ -84,8 +134,8 @@ class WarehouseController extends Controller
     }
 
     public function editcategory($id) {
-        $category = Category::find($id);
         if(Auth::user()->role == "Admin" or Auth::user()->role == "Storekeeper") {
+            $category = Category::find($id);
             return view('warehouse.edit-category')->with('category', $category);
         }
         else {
@@ -93,13 +143,24 @@ class WarehouseController extends Controller
         }
     }
 
+    public function editlocation($id) {
+        if(Auth::user()->role == "Admin" or Auth::user()->role == "Storekeeper") {
+            $location = Location::find($id);
+            return view('warehouse.edit-location')->with('location', $location);
+        }
+        else {
+            return redirect('/');
+        }
+    }
+
     public function itemupdate(Request $request, $id) {
-        $this->validate($request, [
-            'item_name' => 'required',
-            'item_desc' => 'required'
-        ]);
 
         if(Auth::user()->role == "Admin" or Auth::user()->role == "Storekeeper") {
+            $this->validate($request, [
+                'item_name' => 'required',
+                'item_desc' => 'required'
+            ]);
+
             $item = Warehouse::find($id);
             $item->item_name = $request->input('item_name');
             $item->item_desc = $request->input('item_desc');
@@ -109,6 +170,7 @@ class WarehouseController extends Controller
             $item->location = $request->input('location');
             $item->save();
 
+            Toastr::success('Item updated!');
             return redirect('/warehouse/items/' . $item->id);
         }
         else {
@@ -117,15 +179,17 @@ class WarehouseController extends Controller
     }
 
     public function categoryupdate(Request $request, $id) {
-        $this->validate($request, [
-            'name' => 'required'
-        ]);
 
         if(Auth::user()->role == "Admin" or Auth::user()->role == "Storekeeper") {
+            $this->validate($request, [
+                'name' => 'required'
+            ]);
+
             $category = Category::find($id);
             $category->name = $request->input('name');
             $category->save();
 
+            Toastr::success('Category updated!');
             return redirect('/warehouse/category');
         }
         else {
@@ -133,10 +197,31 @@ class WarehouseController extends Controller
         }
     }
 
+    public function locationupdate(Request $request, $id) {
+
+        if(Auth::user()->role == "Admin" or Auth::user()->role == "Storekeeper") {
+            $this->validate($request, [
+                'name' => 'required'
+            ]);
+
+            $location = Location::find($id);
+            $location->name = $request->input('name');
+            $location->save();
+
+            Toastr::success('Location updated!');
+            return redirect('/warehouse/location');
+        }
+        else {
+            return redirect('/');
+        }
+    }
+
     public function destroyitem($id) {
-        if(Auth::user()->role == "Admin") {
+        if(Auth::user()->role == "Admin" or Auth::user()->role == "Storekeeper") {
             $item = Warehouse::find($id);
             $item->delete();
+
+            Toastr::error('Item deleted!');
             return redirect('/warehouse');
         }
         else {
@@ -145,10 +230,25 @@ class WarehouseController extends Controller
     }
 
     public function destroycategory($id) {
-        if(Auth::user()->role == "Admin") {
+        if(Auth::user()->role == "Admin" or Auth::user()->role == "Storekeeper") {
             $category = Category::find($id);
             $category->delete();
+
+            Toastr::error('Category deleted!');
             return redirect('/warehouse/category');
+        }
+        else {
+            return redirect('/');
+        }
+    }
+
+    public function destroylocation($id) {
+        if(Auth::user()->role == "Admin" or Auth::user()->role == "Storekeeper") {
+            $location = Location::find($id);
+            $location->delete();
+
+            Toastr::error('Location deleted!');
+            return redirect('/warehouse/location');
         }
         else {
             return redirect('/');

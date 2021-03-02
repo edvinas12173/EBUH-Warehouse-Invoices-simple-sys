@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Companies;
+use Brian2694\Toastr\Facades\Toastr;
 
 class CompaniesController extends Controller
 {
@@ -44,6 +45,7 @@ class CompaniesController extends Controller
             $company->employee_id = Auth::user()->id;
             $company->save();
 
+            Toastr::success('New company added!');
             return redirect('/companies');
         }
         else {
@@ -92,6 +94,7 @@ class CompaniesController extends Controller
             $company->employee_id = Auth::user()->id;
             $company->save();
 
+            Toastr::success('Company updated!');
             return redirect('/companies/profile/' . $company->id);
         }
         else {
@@ -103,6 +106,8 @@ class CompaniesController extends Controller
         if(Auth::user()->role == "Admin") {
             $company = Companies::find($id);
             $company->delete();
+
+            Toastr::error('Company deleted!');
             return redirect('/companies');
         }
         else {

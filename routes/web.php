@@ -68,6 +68,11 @@ Route::group(['middleware' => 'auth'], function () {
     // Warehouse - Location
     Route::group(['prefix' => 'warehouse/location'],function () {
         Route::get('/', [WarehouseController::class, 'locationindex']);
+        Route::get('/addlocation', [WarehouseController::class, 'addlocation'])->name('addlocation');
+        Route::post('/addlocation', [WarehouseController::class, 'storelocation']);
+        Route::get('/{id}/edit', [WarehouseController::class, 'editlocation'])->name('editlocation');
+        Route::put('/{id}/edit', [WarehouseController::class, 'locationupdate']);
+        Route::delete('/{id}', [WarehouseController::class, 'destroylocation'])->name('destroylocation');
     });
 });
 

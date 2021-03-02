@@ -19,4 +19,13 @@ class Warehouse extends Model
         'price',
         'location',
     ];
+
+    public function category_name() {
+        return $this->belongsTo(Category::class, 'category');
+
+    }
+
+    public function location_name() {
+        return $this->belongsTo(Location::class, 'location','id');
+    }
 }

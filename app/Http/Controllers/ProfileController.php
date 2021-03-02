@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Brian2694\Toastr\Facades\Toastr;
 
 class ProfileController extends Controller
 {
@@ -54,6 +55,7 @@ class ProfileController extends Controller
 
             $employee->save();
 
+            Toastr::success('New employee added!');
             return redirect('/employees');
         }
         else {
@@ -107,6 +109,7 @@ class ProfileController extends Controller
 
             $employee->save();
 
+            Toastr::success('Employee updated!');
             return redirect('/employees/profile/'.$employee->id);
         }
         else {
@@ -134,6 +137,7 @@ class ProfileController extends Controller
             $employee->password = Hash::make($request->input('password'));
             $employee->save();
 
+            Toastr::success('Password updated!');
             return redirect('/employees/profile/'.$employee->id);
         }
         else {
@@ -161,6 +165,7 @@ class ProfileController extends Controller
             $employee->role = $request->input('role');
             $employee->save();
 
+            Toastr::success('Role updated!');
             return redirect('/employees/profile/'.$employee->id);
         }
         else {
@@ -172,6 +177,8 @@ class ProfileController extends Controller
         if(Auth::user()->role == "Admin") {
             $employee = User::find($id);
             $employee->delete();
+
+            Toastr::error('Employee deleted!');
             return redirect('/employees');
         }
         else {

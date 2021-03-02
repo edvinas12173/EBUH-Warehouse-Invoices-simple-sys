@@ -5,7 +5,7 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="card-title">Category</h4>
-                @if(Auth::user()->role == "Admin" or Auth::user()->role == "Manager")
+                @if(Auth::user()->role == "Admin" or Auth::user()->role == "Storekeeper")
                     <div class="card-toolbar">
                         <ul>
                             <li>
@@ -21,7 +21,7 @@
                 @if($category->count() == 0)
                     <div class="container">
                         <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                            <strong>Warning!</strong> The list of items is empty.
+                            <strong>Warning!</strong> The list of categorys is empty.
                         </div>
                     </div>
                 @else
@@ -34,19 +34,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                             @foreach($category as $category)
+                             @foreach($category as $cate)
                                 <tr>
-                                    <td>#{{ $category->id }}</td>
-                                    <td>{{ $category->name }}</td>
+                                    <td>#{{ $cate->id }}</td>
+                                    <td>{{ $cate->name }}</td>
                                     <td>
-                                        <a href="/warehouse/category/{{$category->id}}/edit"><button class="btn btn-dark btn-rounded">Edit</button></a>
-                                        <form action="{{ route('destroycategory', $category->id) }}" method="POST" class="form-display">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-rounded">
-                                                Delete
-                                            </button>
-                                        </form>
+                                        @if(Auth::user()->role == "Admin" or Auth::user()->role == "Storekeeper")
+                                            <a href="/warehouse/category/{{$cate->id}}/edit"><button class="btn btn-dark btn-rounded">Edit</button></a>
+                                            <form action="{{ route('destroycategory', $cate->id) }}" method="POST" class="form-display">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-rounded" onclick="return confirm('Are you sure?')">
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        @endif
                                     </td>
                                 </tr>
                              @endforeach
@@ -56,7 +58,7 @@
             </div>
             <div>
                 <div class="custom-pagination">
-
+                    {{ $category->links('pagination::bootstrap-4') }}
                 </div>
             </div>
         </div>

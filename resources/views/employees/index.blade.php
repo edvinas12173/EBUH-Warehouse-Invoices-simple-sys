@@ -32,6 +32,7 @@
                                 <th>Email</th>
                                 <th>Phone</th>
                                 <th>Role</th>
+                                <th>Status</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -61,6 +62,21 @@
                                             <span class="badge badge-warning">{{ $employee->role }}</span>
                                         @else
                                             <span class="badge badge-dark">{{ $employee->role }}</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if (Cache::has('userOnline' . $employee->id))
+                                            <span class="badge badge-light">
+                                                <li class="text-success">
+                                                    Online
+                                                </li>
+                                            </span>
+                                        @else
+                                            <span class="badge badge-light">
+                                                <li class="text-danger">
+                                                    Offline
+                                                </li>
+                                            </span>
                                         @endif
                                     </td>
                                     <td>

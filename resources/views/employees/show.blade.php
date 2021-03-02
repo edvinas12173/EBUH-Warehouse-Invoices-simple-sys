@@ -17,7 +17,7 @@
                         <form action="{{ route('destroyemployeee', $employee->id) }}" method="POST" class="form-display">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">
+                            <button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-danger btn-sm">
                                 Delete
                             </button>
                         </form>
