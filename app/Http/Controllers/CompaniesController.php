@@ -12,7 +12,9 @@ class CompaniesController extends Controller
 {
     public function index() {
         $companies = Companies::orderBy('created_at', 'DESC')->paginate(10);
-        return view('companies.index')->with('companies', $companies);
+        return view('companies.index', [
+            'companies' => $companies
+        ]);
     }
 
     public function addcompany() {
@@ -59,14 +61,18 @@ class CompaniesController extends Controller
             return redirect('/');
         }
         else {
-            return view('companies.show', compact('company'));
+            return view('companies.show', [
+                'company' => $company
+            ]);
         }
     }
 
     public function edit($id) {
         $company = Companies::find($id);
         if(Auth::user()->role == "Admin" or Auth::user()->role == "Accountant" or Auth::user()->id == $company->employee_id) {
-            return view('companies.edit')->with('company', $company);
+            return view('companies.edit', [
+                'company' => $company
+            ]);
         }
         else {
             return redirect('/');

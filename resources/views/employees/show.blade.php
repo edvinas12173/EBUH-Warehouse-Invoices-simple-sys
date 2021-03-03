@@ -27,42 +27,60 @@
             <div class="table-overflow">
                 <table class="table user-view-table m-0">
                 <tbody>
-                <tr>
-                    <td>First Name:</td>
-                    <td>{{ $employee->name }}</td>
-                </tr>
-                <tr>
-                    <td>Last name:</td>
-                    <td>{{ $employee->lastname }}</td>
-                </tr>
-                <tr>
-                    <td>Gender:</td>
-                    <td>{{ $employee->gender }}</td>
-                </tr>
-                <tr>
-                    <td>Birthday:</td>
-                    <td>{{ $employee->birthday }} , {{ \Carbon\Carbon::parse($employee->birthday)->age }} year</td>
-                </tr>
-                <tr>
-                    <td>Email:</td>
-                    <td>{{ $employee->email }}</td>
-                </tr>
-                <tr>
-                    <td>Phone:</td>
-                    <td>{{ $employee->phone }}</td>
-                </tr>
-                <tr>
-                    <td>Role:</td>
-                    @if ($employee->role == "Admin")
-                        <td class="text-primary">{{ $employee->role }}</td>
-                    @elseif ($employee->role == "Accountant")
-                        <td class="text-success">{{ $employee->role }}</td>
-                    @elseif ($employee->role == "Manager")
-                        <td class="text-warning">{{ $employee->role }}</td>
-                    @else
-                        <td class="text-dark">{{ $employee->role }}</td>
-                    @endif
-                </tr>
+                    <tr>
+                        <td>First Name:</td>
+                        <td>{{ $employee->name }}</td>
+                    </tr>
+                    <tr>
+                        <td>Last name:</td>
+                        <td>{{ $employee->lastname }}</td>
+                    </tr>
+                    <tr>
+                        <td>Gender:</td>
+                        <td>{{ $employee->gender }}</td>
+                    </tr>
+                    <tr>
+                        <td>Birthday:</td>
+                        <td>{{ $employee->birthday }} , {{ \Carbon\Carbon::parse($employee->birthday)->age }} year</td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td>{{ $employee->email }}</td>
+                    </tr>
+                    <tr>
+                        <td>Phone:</td>
+                        <td>{{ $employee->phone }}</td>
+                    </tr>
+                    <tr>
+                        <td>Role:</td>
+                        @if ($employee->role == "Admin")
+                            <td class="text-primary">{{ $employee->role }}</td>
+                        @elseif ($employee->role == "Accountant")
+                            <td class="text-success">{{ $employee->role }}</td>
+                        @elseif ($employee->role == "Manager")
+                            <td class="text-warning">{{ $employee->role }}</td>
+                        @else
+                            <td class="text-dark">{{ $employee->role }}</td>
+                        @endif
+                    </tr>
+                    <tr>
+                        <td>Status:</td>
+                        <td>
+                            @if (Cache::has('userOnline' . $employee->id))
+                                <span class="badge badge-light">
+                                <li class="text-success">
+                                    Online
+                                </li>
+                            </span>
+                            @else
+                                <span class="badge badge-light">
+                                <li class="text-danger">
+                                    Offline
+                                </li>
+                            </span>
+                            @endif
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             </div>

@@ -27,6 +27,9 @@ class HomeController extends Controller
     {
         $employees = User::all();
         $companies = Companies::all();
-        return view('home')->with('employees', $employees)->with('companies', $companies);
+        return view('home', [
+            'employees' => $employees,
+            'companies' => $companies
+        ]);
     }
 }

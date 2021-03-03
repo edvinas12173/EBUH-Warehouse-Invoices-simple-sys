@@ -12,7 +12,9 @@ class ProfileController extends Controller
 {
     public function index() {
         $employees = User::orderBy('role', 'ASC')->paginate(10);
-        return view('employees.index')->with('employees', $employees);
+        return view('employees.index', [
+            'employees' => $employees
+        ]);
     }
 
     public function addemployee() {
@@ -69,14 +71,18 @@ class ProfileController extends Controller
             return redirect('/');
         }
         else {
-            return view('employees.show', compact('employee'));
+            return view('employees.show', [
+                'employee' => $employee
+            ]);
         }
     }
 
     public function edit($id) {
         if(Auth::user()->role == "Admin" or Auth::user()->id == $id) {
             $employee = User::find($id);
-            return view('employees.edit')->with('employee', $employee);
+            return view('employees.edit', [
+                'employee' => $employee
+            ]);
         }
         else {
             return redirect('/');
@@ -120,7 +126,9 @@ class ProfileController extends Controller
     public function changepassword($id) {
         if(Auth::user()->role == "Admin" or Auth::user()->id == $id) {
             $employee = User::find($id);
-            return view('employees.change-password')->with('employee', $employee);
+            return view('employees.change-password', [
+                'employee' => $employee
+            ]);
         }
         else {
             return redirect('/');
@@ -148,7 +156,9 @@ class ProfileController extends Controller
     public function changerole($id) {
         if(Auth::user()->role == "Admin") {
             $employee = User::find($id);
-            return view('employees.change-role')->with('employee', $employee);
+            return view('employees.change-role', [
+                'employee' => $employee
+            ]);
         }
         else {
             return redirect('/');

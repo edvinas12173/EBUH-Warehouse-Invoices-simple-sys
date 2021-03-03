@@ -14,16 +14,22 @@ class WarehouseController extends Controller
 {
     public function index() {
         $items = Warehouse::orderBy('created_at', 'ASC')->paginate(10);
-        return view('warehouse.index')->with('items', $items);
+        return view('warehouse.index', [
+            'items' => $items
+        ]);
     }
 
     public function categoryindex() {
         $category = Category::orderBy('created_at', 'ASC')->paginate(10);
-        return view('warehouse.category')->with('category', $category);
+        return view('warehouse.category', [
+            'category' => $category
+        ]);
     }
     public function locationindex() {
         $location = Location::orderBy('created_at', 'ASC')->paginate(10);
-        return view('warehouse.location')->with('location', $location);
+        return view('warehouse.location', [
+            'location' => $location
+        ]);
     }
 
     public function additem() {
@@ -119,14 +125,18 @@ class WarehouseController extends Controller
             return redirect('/');
         }
         else {
-            return view('warehouse.item-show', compact('item'));
+            return view('warehouse.item-show', [
+                'item' => $item
+            ]);
         }
     }
 
     public function edititem($id) {
         if(Auth::user()->role == "Admin" or Auth::user()->role == "Storekeeper") {
             $item = Warehouse::find($id);
-            return view('warehouse.edit-item')->with('item', $item);
+            return view('warehouse.edit-item', [
+                'item' => $item
+            ]);
         }
         else {
             return redirect('/');
@@ -136,7 +146,9 @@ class WarehouseController extends Controller
     public function editcategory($id) {
         if(Auth::user()->role == "Admin" or Auth::user()->role == "Storekeeper") {
             $category = Category::find($id);
-            return view('warehouse.edit-category')->with('category', $category);
+            return view('warehouse.edit-category', [
+                'category' => $category
+            ]);
         }
         else {
             return redirect('/');
@@ -146,7 +158,9 @@ class WarehouseController extends Controller
     public function editlocation($id) {
         if(Auth::user()->role == "Admin" or Auth::user()->role == "Storekeeper") {
             $location = Location::find($id);
-            return view('warehouse.edit-location')->with('location', $location);
+            return view('warehouse.edit-location', [
+                'location' => $location
+            ]);
         }
         else {
             return redirect('/');
