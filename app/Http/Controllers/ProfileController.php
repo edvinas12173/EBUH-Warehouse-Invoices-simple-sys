@@ -188,7 +188,7 @@ class ProfileController extends Controller
             $employee = User::find($id);
             $employee->delete();
 
-            Toastr::error('Employee deleted!');
+            Toastr::success('Employee deleted!');
             return redirect('/employees');
         }
         else {

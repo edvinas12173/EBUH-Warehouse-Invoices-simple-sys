@@ -34,7 +34,12 @@ class WarehouseController extends Controller
 
     public function additem() {
         if(Auth::user()->role == "Admin" or Auth::user()->role == "Storekeeper") {
-            return view('warehouse.add-item');
+            $categories = Category::all();
+            $locations = Location::all();
+            return view('warehouse.add-item', [
+                'categories' => $categories,
+                'locations' => $locations
+            ]);
         }
         else {
             return redirect('/');
@@ -134,8 +139,12 @@ class WarehouseController extends Controller
     public function edititem($id) {
         if(Auth::user()->role == "Admin" or Auth::user()->role == "Storekeeper") {
             $item = Warehouse::find($id);
+            $categories = Category::all();
+            $locations = Location::all();
             return view('warehouse.edit-item', [
-                'item' => $item
+                'item' => $item,
+                'categories' => $categories,
+                'locations' => $locations
             ]);
         }
         else {
@@ -235,7 +244,7 @@ class WarehouseController extends Controller
             $item = Warehouse::find($id);
             $item->delete();
 
-            Toastr::error('Item deleted!');
+            Toastr::success('Item deleted!');
             return redirect('/warehouse');
         }
         else {
@@ -246,10 +255,18 @@ class WarehouseController extends Controller
     public function destroycategory($id) {
         if(Auth::user()->role == "Admin" or Auth::user()->role == "Storekeeper") {
             $category = Category::find($id);
-            $category->delete();
+            $item = Warehouse::where('category', $id)->count();
 
-            Toastr::error('Category deleted!');
-            return redirect('/warehouse/category');
+            if($item != 0) {
+                Toastr::warning('Exist items in this category!');
+                return redirect('/warehouse/category');
+            }
+            else {
+                $category->delete();
+                Toastr::success('Category deleted!');
+                return redirect('/warehouse/category');
+            }
+
         }
         else {
             return redirect('/');
@@ -259,10 +276,17 @@ class WarehouseController extends Controller
     public function destroylocation($id) {
         if(Auth::user()->role == "Admin" or Auth::user()->role == "Storekeeper") {
             $location = Location::find($id);
-            $location->delete();
+            $item = Warehouse::where('location', $id)->count();
 
-            Toastr::error('Location deleted!');
-            return redirect('/warehouse/location');
+            if($item != 0) {
+                Toastr::warning('Exist items in this location!');
+                return redirect('/warehouse/location');
+            }
+            else {
+                $location->delete();
+                Toastr::success('Location deleted!');
+                return redirect('/warehouse/location');
+            }
         }
         else {
             return redirect('/');

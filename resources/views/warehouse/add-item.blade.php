@@ -26,7 +26,12 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <input id="category" type="text" class="form-control @error('category') is-invalid @enderror" name="category" required autocomplete="category" placeholder="Category">
+                        <select id="category" type="text" class="form-control @error('category') is-invalid @enderror" name="category" required autocomplete="category" placeholder="Category">
+                            <option value="#" selected disabled>Select category</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
+                        </select>
                         @error('category')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -50,7 +55,12 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <input id="location" type="text" class="form-control @error('location') is-invalid @enderror" name="location" required autocomplete="location" placeholder="Location">
+                        <select id="location" type="text" class="form-control @error('location') is-invalid @enderror" name="location" required autocomplete="location" placeholder="Location">
+                            <option value="#" selected disabled>Select location</option>
+                            @foreach($locations as $location)
+                                <option value="{{ $location->id }}">{{ $location->name }}</option>
+                            @endforeach
+                        </select>
                         @error('location')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

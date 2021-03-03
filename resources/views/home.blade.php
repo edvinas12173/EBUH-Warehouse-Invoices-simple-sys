@@ -269,7 +269,7 @@
                                         </div>
                                         <div class="info">
                                             <div class="float-item">
-                                                <a href="/companys/profile/{{ $company->id }}"><button class="btn btn-common btn-rounded">More informations</button></a>
+                                                <a href="/companies/profile/{{ $company->id }}"><button class="btn btn-common btn-rounded">More informations</button></a>
                                             </div>
                                         </div>
                                     </div>

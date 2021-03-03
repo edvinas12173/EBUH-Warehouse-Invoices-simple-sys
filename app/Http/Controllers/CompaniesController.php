@@ -113,7 +113,7 @@ class CompaniesController extends Controller
             $company = Companies::find($id);
             $company->delete();
 
-            Toastr::error('Company deleted!');
+            Toastr::success('Company deleted!');
             return redirect('/companies');
         }
         else {
